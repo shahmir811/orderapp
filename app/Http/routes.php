@@ -18,14 +18,17 @@ Route::get('/', function () {
 //Distributors Contoller
 Route::resource('distributions', 'DistributionController');
 
+
 //Dealers Controller
 Route::resource('dealers', 'DealerController');
 
 //Companies Controller
 Route::resource('companies', 'CompanyController');
 
+
 //Customers Controller
 Route::resource('customers', 'CustomerController');
+
 
 //Locations Controller
 Route::resource('locations', 'LocationController', ['except' => ['create']]);

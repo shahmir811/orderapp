@@ -12,38 +12,16 @@ use Carbon;
 
 class DistributionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
 
-        $distributions = Distributor::where('status','=',1)->where(function($query) use ($request)
-        {
-            //Filter by Keyword Enter
-            if(($term = $request->get('term')))
-            {
-                $query->orWhere('name', 'like', '%'.$term.'%');
-                $query->orWhere('email', 'like', '%'.$term.'%');
-            }
-        })
-
-        ->orderBy('name','asc')
-        ->paginate(10);
-
-        
+        $distributions = Distributor::where('status','=',1)->get();
         return view('distributions.index')->with('distributions', $distributions);
-
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //Grab all the locations
@@ -52,12 +30,7 @@ class DistributionController extends Controller
         return view('distributions.create')->with('locations', $locations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         // Vaidation 
@@ -89,12 +62,7 @@ class DistributionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //Displays the stored Distributor
@@ -104,12 +72,7 @@ class DistributionController extends Controller
         return view ('distributions.show')->with('distributions',$distributions);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //Find the Distributor That needs to be edited
@@ -121,13 +84,7 @@ class DistributionController extends Controller
         return view ('distributions.edit')->with('distributions', $distributions)->with('locations', $locations);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
 
@@ -160,12 +117,7 @@ class DistributionController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //Get the Distributor that is to be deleted

@@ -13,31 +13,12 @@ use Carbon;
 
 class DealerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+
     public function index(Request $request)
     {
 
-        $dealers = Dealer::where('status','=',1)->where(function($query) use ($request)
-        {
-            //Filter by Keyword Enter
-            if(($term = $request->get('term')))
-            {
-                $query->orWhere('name', 'like', '%'.$term.'%');
-                $query->orWhere('address', 'like', '%'.$term.'%');
-                $query->orWhere('email', 'like', '%'.$term.'%');
-                //$query->orWhere('distributor_id', 'like', '%'.$term.'%');
-                $query->orWhere('distributor_id', 'like', '%'.$term.'%')->join('distributions')->on('dealers.distributor_id', '=', 'distributions.id');
-            }
-        })
-
-        ->orderBy('name','asc')
-        ->paginate(10);
-
-        
+        $dealers = Dealer::where('status','=',1)->get();
         return view('dealers.index')->with('dealers', $dealers);
     }
 

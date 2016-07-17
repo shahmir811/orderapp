@@ -2,6 +2,17 @@
 
 @section('title', ' | Distributors List')
 
+@section('head')
+
+		{!! Html::style('css/bootstrap.css') !!}
+		{!! Html::style('css/jquery.dataTables.min.css') !!}
+
+		{!! Html::script('js/jquery-3.0.0.min.js') !!}
+
+
+@endsection
+
+
 @section('content')
 
 	<div class="row">
@@ -14,36 +25,24 @@
 
 
 			<a href="{{ route('distributions.create') }}", class="btn btn-primary btn-lg " style="margin-top: 30px; margin-left: 15px;"> Create New Distributor</a>
-			
-			{!! Form::open([ 'route' => 'distributions.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left', 'style' => "margin-top: 15px;", 'role' => 'search']) !!}
-			
-				<div class="input-group">
-					{!! Form::text('term', Request::get('term'), ['class' => 'form-control', 'placeholder' => 'Search...', 'id' => 'term']) !!}
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">
-							<i class="glyphicon glyphicon-search"></i>
-						</button>
-					</span>
-				</div>
-			{!! Form::close() !!}
+	
 			
 		</div>
-
-
-
-		<div class="col-md-12">
-			<hr>
-		</div>
-
 
 	</div> <!-- End of the Top Row -->
 
+<div class="wrapper">
+	<section class="panel panel-primary">
+		
+		<div class="panel-heading">
+			<b>All Distribution List</b>
+		</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<table class="table">
+		<div class="panel-body">
+			<table class="table table-hover table-striped table-bordered" id="myTable">
+				
 				<thead>
-					<th>Name</th>
+					<th><b>Name</b></th>
 					<th>Email Address</th>
 					<th>Phone No</th>
 					<th></th>
@@ -51,26 +50,35 @@
 
 				<tbody>
 					@foreach($distributions as $distribution)
-					<tr>
-
-						<td>{{ $distribution->name }}</td>
-						<td>{{ $distribution->email }}</td>
-						<td>{{ $distribution->phone }}</td>
-						<td><a href="{{ route('distributions.show', $distribution->id) }}" class="btn btn-default btn-sm">View</a></td>
-
-					</tr>
+						<tr>
+							<td>{{ $distribution->name }}</td>
+							<td>{{ $distribution->email }}</td>
+							<td>{{ $distribution->phone }}</td>
+							<td><a href="{{ route('distributions.show', $distribution->id) }}" class="btn btn-default btn-sm">View</a></td>
+						</tr>
 					@endforeach
 				</tbody>
-			</table>
-
-			<div class="text-center">
-				{!! $distributions->appends ( Request::query() )->render() !!} <!-- This is used for pagination at the bottom of the table -->
-			</div>
-
+			</table>	
 		</div>
-	</div>
-
+	</section>
+</div>
 
 
 
 @stop 
+
+
+@section ('scriptsoutside')
+
+
+	{!! Html::script('js/jquery.dataTables.min.js') !!}
+	{!! Html::script('js/select.js') !!}
+
+	<script type="text/javascript">
+		$('#myTable').DataTable({
+			"sPaginationType": "listbox"
+		});
+	</script>
+
+@endsection
+

@@ -12,38 +12,14 @@ use Carbon;
 
 class LocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
 
-        $locations = Location::where('status','=',1)->where(function($query) use ($request)
-        {
-            //Filter by Keyword Enter
-            if(($term = $request->get('term')))
-            {
-                $query->orWhere('location_name', 'like', '%'.$term.'%');
-                $query->orWhere('location_address', 'like', '%'.$term.'%');
-            }
-        })
-
-        ->orderBy('location_name','asc')
-        ->paginate(10);
-
-        
-        return view('locations.index')->with('locations', $locations);
+        $locations = Location::where('status','=',1)->get();
+        return view('locations.search')->with('locations', $locations);
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //Validation

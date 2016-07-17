@@ -46,7 +46,7 @@
 
 				<div class="row">
 					<div class="col-md-12">
-						{{ Html::linkRoute('customers.index', 'Dealers List', [], ['class' => 'btn btn-default btn-block' , 'style'=> 'margin-top: 18px; font-weight: bold;' ]) }}
+						{{ Html::linkRoute('customers.index', 'Customers List', [], ['class' => 'btn btn-default btn-block' , 'style'=> 'margin-top: 18px; font-weight: bold;' ]) }}
 					</div>
 				</div>
 

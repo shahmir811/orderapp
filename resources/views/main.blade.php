@@ -31,4 +31,6 @@
         @yield('scripts')
 
     </body>
+
+    @yield('scriptsoutside')
 </html>

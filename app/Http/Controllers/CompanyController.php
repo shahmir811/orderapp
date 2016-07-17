@@ -12,39 +12,18 @@ use Carbon;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function index(Request $request)
     {
 
-        $companies = Company::where('status','=',1)->where(function($query) use ($request)
-        {
-            //Filter by Keyword Enter
-            if(($term = $request->get('term')))
-            {
-                $query->orWhere('company_name', 'like', '%'.$term.'%');
-                $query->orWhere('industry', 'like', '%'.$term.'%');
-                $query->orWhere('address', 'like', '%'.$term.'%');
-                $query->orWhere('employees', 'like', '%'.$term.'%');
-            }
-        })
-
-        ->orderBy('company_name','asc')
-        ->paginate(10);
-
-        
-        return view('companies.index')->with('companies', $companies);
+        $companies = Company::where('status','=',1)->get();
+        return view('companies.search')->with('companies', $companies);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //Capture All the Locations from the Location Table
@@ -54,12 +33,7 @@ class CompanyController extends Controller
         return view('companies.create')->with('locations', $locations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 
@@ -93,12 +67,7 @@ class CompanyController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //Displays the stored Company
@@ -108,12 +77,7 @@ class CompanyController extends Controller
         return view ('companies.show')->with('companies',$companies);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //Find the Company That needs to be edited
@@ -125,13 +89,7 @@ class CompanyController extends Controller
         return view ('companies.edit')->with('companies', $companies)->with('locations',$locations);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
 
@@ -167,12 +125,7 @@ class CompanyController extends Controller
         return redirect()->route('companies.show', $companies->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
         //Get the Company that is to be deleted

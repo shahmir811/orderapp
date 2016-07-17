@@ -13,6 +13,7 @@ use Carbon;
 
 class CustomerController extends Controller
 {
+
     private $rules = [
             'line_id'           => 'required|integer',
             'customer_name'     => 'required|max:255',
@@ -23,24 +24,8 @@ class CustomerController extends Controller
 
     public function index(Request $request)
     {
-        $customers = Customer::where('status','=',1)->where(function($query) use ($request)
-        {
-            //Filter by Keyword Enter
-            if(($term = $request->get('term')))
-            {
-                $query->orWhere('line_id', 'like', '%'.$term.'%');
-                $query->orWhere('customer_name', 'like', '%'.$term.'%');
-                $query->orWhere('address', 'like', '%'.$term.'%');
-                $query->orWhere('city', 'like', '%'.$term.'%');
-                //$query->orWhere('distributor_id', 'like', '%'.$term.'%');
-            }
-        })
-
-        ->orderBy('customer_name','asc')
-        ->paginate(10);
-
-        
-        return view('customers.index')->with('customers', $customers);
+        $customers = Customer::where('status','=',1)->get();
+        return view('customers.search')->with('customers', $customers);
     }
 
  
