@@ -17,7 +17,7 @@ class LocationController extends Controller
     {
 
         $locations = Location::where('status','=',1)->get();
-        return view('locations.search')->with('locations', $locations);
+        return view('locations.index')->with('locations', $locations);
     }
 
     public function store(Request $request)

@@ -4,7 +4,7 @@
         
     @include('partials._head')
 
-    @section('head')
+    @yield('head')
 
     </head>
 

@@ -19,7 +19,7 @@ class CompanyController extends Controller
     {
 
         $companies = Company::where('status','=',1)->get();
-        return view('companies.search')->with('companies', $companies);
+        return view('companies.index')->with('companies', $companies);
 
     }
 
